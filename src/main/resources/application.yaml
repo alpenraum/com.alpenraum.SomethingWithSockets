@@ -1,0 +1,11 @@
+ktor:
+    application:
+        modules:
+            - com.alpenraum.ApplicationKt.module
+    deployment:
+        port: $KTOR_PORT
+        host: alpenraum.com
+
+    development: $KTOR_DEV_MODE
+    environment: $KTOR_ENV
+
