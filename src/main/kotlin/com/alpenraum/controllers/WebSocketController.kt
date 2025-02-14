@@ -1,16 +1,18 @@
 package com.alpenraum.controllers
 
 import com.alpenraum.ws.SessionManager
-import io.ktor.server.routing.*
-import io.ktor.server.websocket.*
-import io.ktor.websocket.*
-import kotlinx.coroutines.flow.collectLatest
+import io.ktor.server.routing.Routing
+import io.ktor.server.websocket.webSocket
+import io.ktor.websocket.CloseReason
+import io.ktor.websocket.Frame
+import io.ktor.websocket.close
+import io.ktor.websocket.readText
 import org.koin.ktor.ext.inject
-
 
 fun Routing.webSocketController() {
     val sessionManager: SessionManager by inject()
-    webSocket("/ws") { // websocketSession
+    webSocket("/ws") {
+        // websocketSession
         val id = sessionManager.addSession(this)
         outgoing.send(Frame.Text("Connected: $id"))
         try {

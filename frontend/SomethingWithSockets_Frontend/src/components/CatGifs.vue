@@ -9,6 +9,10 @@ defineProps<{
 
    class CatGifs {
         url: string
+
+        constructor(url: string) {
+                this.url = url;
+            }
     }
 
 const catGif = ref("")
@@ -19,6 +23,7 @@ const fetchingGifs = ref(false)
         catGif.value = catGifsResponse
     }
     onMounted(async () => {
+        console.log("xyz");
         await fetchGif()
     })
 

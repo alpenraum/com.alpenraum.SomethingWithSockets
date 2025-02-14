@@ -4,7 +4,7 @@ ktor:
             - com.alpenraum.ApplicationKt.module
     deployment:
         port: $KTOR_PORT
-        host: alpenraum.com
+        host: 0.0.0.0
 
     development: $KTOR_DEV_MODE
     environment: $KTOR_ENV

@@ -7,8 +7,8 @@ import io.ktor.server.config.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import java.sql.*
 import kotlinx.coroutines.*
+import java.sql.*
 
 fun Application.configureDatabases() {
     val mongoDatabase = connectToMongoDB()

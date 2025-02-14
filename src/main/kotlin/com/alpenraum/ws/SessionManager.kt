@@ -1,16 +1,21 @@
 package com.alpenraum.ws
 
-import io.ktor.websocket.*
+import io.ktor.websocket.WebSocketSession
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import java.util.concurrent.ConcurrentHashMap
-import java.util.concurrent.atomic.AtomicInteger
+import kotlin.uuid.ExperimentalUuidApi
+import kotlin.uuid.Uuid
 
 class SessionManager {
-    private val sessionCounter = AtomicInteger()
-    val sessions = ConcurrentHashMap<Int, WebSocketSession>()
+    val sessions = ConcurrentHashMap<String, WebSocketSession>()
 
-    fun addSession(session: WebSocketSession): Int {
-        synchronized(this) {
-            val sessionId = sessionCounter.getAndIncrement()
+    private val mutex = Mutex()
+
+    @OptIn(ExperimentalUuidApi::class)
+    suspend fun addSession(session: WebSocketSession): String {
+        mutex.withLock {
+            val sessionId = Uuid.random().toString()
             sessions[sessionId] = session
             return sessionId
         }
